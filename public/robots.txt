@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://reinon-meing.github.io/sitemap.xml
