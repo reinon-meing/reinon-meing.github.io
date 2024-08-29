@@ -24,11 +24,20 @@ jobs:
         - name: Build Web
           run: hugo -D
 
-        - name: Deploy Web
-          uses: peaceiris/actions-gh-pages@v4
-          with:
-              PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-              EXTERNAL_REPOSITORY: reinon-meing/hugo
-              PUBLISH_BRANCH: main
-              PUBLISH_DIR: ./public
-              commit_message: auto deploy
+         - name: Publish to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: [hugoblog]
+          directory: ./
+          # Optional: Enable this if you want to have GitHub Deployments triggered
+          gitHubToken: ${{ secrets.GH_TOKEN }}
+          # Optional: Switch what branch you are publishing to.
+          # By default this will be the branch which triggered this workflow
+          branch: main
+          # Optional: Change the working directory
+          # All my website content is in the site folder
+          workingDirectory: ./public
+          # Optional: Change the Wrangler version, allows you to point to a specific version or a tag such as `beta`
+          wranglerVersion: '3'
